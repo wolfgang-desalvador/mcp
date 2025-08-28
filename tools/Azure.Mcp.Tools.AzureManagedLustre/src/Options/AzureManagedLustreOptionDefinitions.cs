@@ -28,14 +28,14 @@ public static class AzureManagedLustreOptionDefinitions
 
     public static readonly Option<string> SkuOption = new(
         $"--{sku}",
-        "The AMLFS SKU. Exact allowed values: AMLFS-Durable-Premium-40, AMLFS-Durable-Premium-125, AMLFS-Durable-Premium-250, AMLFS-Durable-Premium-500.\n")
+        "The AMLFS SKU. Exact allowed values: AMLFS-Durable-Premium-40, AMLFS-Durable-Premium-125, AMLFS-Durable-Premium-250, AMLFS-Durable-Premium-500.")
     {
         IsRequired = true
     };
 
     public static readonly Option<int> SizeOption = new(
         $"--{size}",
-        "The AMLFS size in TiB as an integer (no unit). Examples: 4, 12, 128.\n")
+        "The AMLFS size in TiB as an integer (no unit). Examples: 4, 12, 128.")
     {
         IsRequired = true
     };
@@ -46,13 +46,13 @@ public static class AzureManagedLustreOptionDefinitions
 
     public static readonly Option<string> LocationOption = new(
         $"--{location}",
-        "Azure region/region short name (use Azure location token, lowercase). Examples: uaenorth, swedencentral, eastus.\n")
+        "Azure region/region short name (use Azure location token, lowercase). Examples: uaenorth, swedencentral, eastus.")
     { IsRequired = true };
 
     public static readonly Option<string> SubnetIdOption = new(
         $"--{subnetId}",
         "Full subnet resource ID. Required format: /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/{subnet}.\n" +
-        "Example: --subnet-id /subscriptions/0000/resourceGroups/my-rg/providers/Microsoft.Network/virtualNetworks/vnet-001/subnets/subnet-001\n")
+        "Example: --subnet-id /subscriptions/0000/resourceGroups/my-rg/providers/Microsoft.Network/virtualNetworks/vnet-001/subnets/subnet-001")
     { IsRequired = true };
 
     public static readonly Option<string> ZoneOption = new(
