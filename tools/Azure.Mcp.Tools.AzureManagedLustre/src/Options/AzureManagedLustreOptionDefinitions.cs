@@ -61,7 +61,7 @@ public static class AzureManagedLustreOptionDefinitions
         $"--{hsmContainer}",
         "Full blob container resource ID for HSM integration. HPC Cache Resource Provider must have before deployment Storage Blob Data Contributor and Storage Account Contributor roles on parent Storage Account." +
         "Format: /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Storage/storageAccounts/{account}/blobServices/default/containers/{container}.\n" +
-        "Example: --hsm-container /subscriptions/0000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/stacc/blobServices/default/containers/hsmcontainer\n");
+        "Example: --hsm-container /subscriptions/0000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/stacc/blobServices/default/containers/hsm-container\n");
 
     public static readonly Option<string> HsmLogContainerOption = new(
         $"--{hsmLogContainer}",
