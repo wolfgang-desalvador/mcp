@@ -95,4 +95,85 @@ public sealed class AzureManagedLustreService(ISubscriptionService subscriptionS
             throw new Exception($"Error retrieving required subnet size: {ex.Message}", ex);
         }
     }
+
+    public async Task StartArchiveAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string filesystemPath,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(subscription);
+        ArgumentException.ThrowIfNullOrWhiteSpace(resourceGroup);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileSystemName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(filesystemPath);
+
+        var rg = await _resourceGroupService.GetResourceGroupResource(subscription, resourceGroup, tenant, retryPolicy)
+            ?? throw new Exception($"Resource group '{resourceGroup}' not found");
+
+        try
+        {
+            var fs = await rg.GetAmlFileSystemAsync(fileSystemName);
+            var content = new AmlFileSystemArchiveContent
+            {
+                FilesystemPath = filesystemPath
+            };
+            _ = fs.Value.Archive(content);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error starting archive for AMLFS '{fileSystemName}' in RG '{resourceGroup}': {ex.Message}", ex);
+        }
+    }
+
+    public async Task<string?> GetArchiveStatusAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(subscription);
+        ArgumentException.ThrowIfNullOrWhiteSpace(resourceGroup);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileSystemName);
+
+        var rg = await _resourceGroupService.GetResourceGroupResource(subscription, resourceGroup, tenant, retryPolicy)
+            ?? throw new Exception($"Resource group '{resourceGroup}' not found");
+        try
+        {
+            var fs = await rg.GetAmlFileSystemAsync(fileSystemName);
+            var data = fs.Value.Data;
+            // SDK doesn't expose a specific archive job state. Report if HSM is configured as a minimal status.
+            return data.Hsm is not null ? "Configured" : "NotConfigured";
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error getting archive status for AMLFS '{fileSystemName}' in RG '{resourceGroup}': {ex.Message}", ex);
+        }
+    }
+
+    public async Task CancelArchiveAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(subscription);
+        ArgumentException.ThrowIfNullOrWhiteSpace(resourceGroup);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileSystemName);
+
+        var rg = await _resourceGroupService.GetResourceGroupResource(subscription, resourceGroup, tenant, retryPolicy)
+            ?? throw new Exception($"Resource group '{resourceGroup}' not found");
+        try
+        {
+            var fs = await rg.GetAmlFileSystemAsync(fileSystemName);
+            _ = fs.Value.CancelArchive();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error canceling archive for AMLFS '{fileSystemName}' in RG '{resourceGroup}': {ex.Message}", ex);
+        }
+    }
 }

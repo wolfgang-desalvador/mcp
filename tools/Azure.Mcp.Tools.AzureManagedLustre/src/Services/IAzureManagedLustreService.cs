@@ -18,4 +18,26 @@ public interface IAzureManagedLustreService
         string sku, int size,
         string? tenant = null,
         RetryPolicyOptions? retryPolicy = null);
+
+    Task StartArchiveAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string filesystemPath,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null);
+
+    Task<string?> GetArchiveStatusAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null);
+
+    Task CancelArchiveAsync(
+        string subscription,
+        string resourceGroup,
+        string fileSystemName,
+        string? tenant = null,
+        RetryPolicyOptions? retryPolicy = null);
 }

@@ -30,5 +30,12 @@ public class AzureManagedLustreSetup : IAreaSetup
 
         fileSystem.AddCommand("list", new FileSystemListCommand(loggerFactory.CreateLogger<FileSystemListCommand>()));
         fileSystem.AddCommand("required-subnet-size", new FileSystemSubnetSizeCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeCommand>()));
+
+        // archive sub-group
+        var archive = new CommandGroup("archive", "Azure Managed Lustre archive operations.");
+        fileSystem.AddSubGroup(archive);
+        archive.AddCommand("start", new FileSystemArchiveStartCommand(loggerFactory.CreateLogger<FileSystemArchiveStartCommand>()));
+        archive.AddCommand("status", new FileSystemArchiveStatusCommand(loggerFactory.CreateLogger<FileSystemArchiveStatusCommand>()));
+        archive.AddCommand("cancel", new FileSystemArchiveCancelCommand(loggerFactory.CreateLogger<FileSystemArchiveCancelCommand>()));
     }
 }
