@@ -35,7 +35,6 @@ public class AzureManagedLustreSetup : IAreaSetup
         var archive = new CommandGroup("archive", "Azure Managed Lustre archive operations.");
         fileSystem.AddSubGroup(archive);
         archive.AddCommand("start", new FileSystemArchiveStartCommand(loggerFactory.CreateLogger<FileSystemArchiveStartCommand>()));
-        archive.AddCommand("status", new FileSystemArchiveStatusCommand(loggerFactory.CreateLogger<FileSystemArchiveStatusCommand>()));
         archive.AddCommand("cancel", new FileSystemArchiveCancelCommand(loggerFactory.CreateLogger<FileSystemArchiveCancelCommand>()));
     }
 }

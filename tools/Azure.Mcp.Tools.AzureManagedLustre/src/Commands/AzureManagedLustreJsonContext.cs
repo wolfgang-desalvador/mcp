@@ -10,7 +10,6 @@ namespace Azure.Mcp.Tools.AzureManagedLustre.Commands;
 [JsonSerializable(typeof(FileSystemSubnetSizeCommand.FileSystemSubnetSizeResult))]
 [JsonSerializable(typeof(FileSystemListCommand.FileSystemListResult))]
 [JsonSerializable(typeof(FileSystemArchiveStartCommand.ArchiveStartResult))]
-[JsonSerializable(typeof(FileSystemArchiveStatusCommand.ArchiveStatusResult))]
 [JsonSerializable(typeof(FileSystemArchiveCancelCommand.ArchiveCancelResult))]
 [JsonSerializable(typeof(LustreFileSystem))]
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
