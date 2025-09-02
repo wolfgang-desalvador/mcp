@@ -41,5 +41,24 @@ namespace Azure.Mcp.Tools.AzureManagedLustre.LiveTests
             var ips = result.AssertProperty("numberOfRequiredIPs");
             Assert.Equal(JsonValueKind.Number, ips.ValueKind);
         }
+
+        [Fact]
+        public async Task Should_check_subnet_size()
+        {
+            var result = await CallToolAsync(
+                "azmcp_azuremanagedlustre_filesystem_check-subnet-size",
+                new()
+                {
+                    { "subscription", Settings.SubscriptionId },
+                    { "sku", "AMLFS-Durable-Premium-40" },
+                    { "size", 480 },
+                    { "location", Environment.GetEnvironmentVariable("LOCATION") },
+                    { "subnet-id", Environment.GetEnvironmentVariable("AMLFS_SUBNET_ID") }
+                });
+
+            var valid = result.AssertProperty("valid");
+            Assert.Equal(JsonValueKind.True, valid.ValueKind);
+            Assert.True(valid.GetBoolean());
+        }
     }
 }
