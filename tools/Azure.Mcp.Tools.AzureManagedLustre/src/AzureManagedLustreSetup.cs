@@ -32,7 +32,7 @@ public class AzureManagedLustreSetup : IAreaSetup
 
         var subnetSize = new CommandGroup("subnetsize", "Subnet size planning and validation operations for Azure Managed Lustre.");
         fileSystem.AddSubGroup(subnetSize);
-        subnetSize.AddCommand("ask", new FileSystemSubnetSizeRequiredCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeRequiredCommand>()));
-        subnetSize.AddCommand("validate", new FileSystemSubnetSizeCheckCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeCheckCommand>()));
+        subnetSize.AddCommand("ask", new SubnetSizeAskCommand(loggerFactory.CreateLogger<SubnetSizeAskCommand>()));
+        subnetSize.AddCommand("validate", new SubnetSizeValidateCommand(loggerFactory.CreateLogger<SubnetSizeValidateCommand>()));
     }
 }
