@@ -29,7 +29,10 @@ public class AzureManagedLustreSetup : IAreaSetup
         azureManagedLustre.AddSubGroup(fileSystem);
 
         fileSystem.AddCommand("list", new FileSystemListCommand(loggerFactory.CreateLogger<FileSystemListCommand>()));
-        fileSystem.AddCommand("subnet-size-required", new FileSystemSubnetSizeRequiredCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeRequiredCommand>()));
-        fileSystem.AddCommand("subnet-size-validate", new FileSystemSubnetSizeCheckCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeCheckCommand>()));
+
+        var subnetSize = new CommandGroup("subnetsize", "Subnet size planning and validation operations for Azure Managed Lustre.");
+        fileSystem.AddSubGroup(subnetSize);
+        subnetSize.AddCommand("ask", new FileSystemSubnetSizeRequiredCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeRequiredCommand>()));
+        subnetSize.AddCommand("validate", new FileSystemSubnetSizeCheckCommand(loggerFactory.CreateLogger<FileSystemSubnetSizeCheckCommand>()));
     }
 }
